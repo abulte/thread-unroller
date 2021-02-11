@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import tweepy, sys, os, dotenv
 dotenv.load_dotenv()
 
@@ -21,7 +20,11 @@ def run():
     if len(sys.argv) == 3:
         tweetId,outputFile = sys.argv[1].split("?")[0].split('/')[-1], sys.argv[2]
         api = return_api()
-        topLevelTweet = api.get_status(tweetId)._json
+        try:
+            topLevelTweet = api.get_status(tweetId)._json
+        except:
+            print("Error finding tweet: {}".format(tweetId))
+            sys.exit()
         thread = Thread(topLevelTweet['text'])
         uid = topLevelTweet['user']['id']
 
@@ -37,7 +40,7 @@ def run():
             f.write(thread.text)
     
     else:
-        print("ErrorParsingArguments:\t./unthread.py <tweet-link> <output-txt-file>")
+        print("ErrorParsingArguments:\tpython unthread.py <tweet-link> <output-txt-file>")
 
 
 if __name__ == "__main__":
