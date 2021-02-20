@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Thread Unroller{% endblock %}
+{% block body %}
+<div class="jumbotron my-4 mx-auto w-50">
+  <h1>Twitter Thread Unroller</h1>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="w-50 mx-auto">
+        <form method="post" class="w-75 mx-auto">
+            <div class="input-group mb-3 w-100">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="tweet-url-input">Tweet URL</span>
+                </div>
+                <input type="text" class="form-control" name="tweetUrl" aria-describedby="tweet-url-input" placeholder="https://twitter.com/username/status/1360000975111154051">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-secondary" type="button">Unroll</button>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+<div class="row">
+    <div class="w-50 mx-auto">
+        <div class="w-75 mx-auto">
+            <div class="w-100">
+                {% for f in files %}
+                <form method="post" action="/download">
+                    <button name="{{f}}" class="ml-2 btn btn-secondary">Download</button>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

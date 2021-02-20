@@ -1,3 +1,5 @@
 venv/
 .env
-test.txt
+*__pycache__/
+*.log
+*.yaml
