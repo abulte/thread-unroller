@@ -24,10 +24,6 @@ def download():
     fn = '{}.txt'.format(file_base)
     fp = os.path.abspath('files/{}'.format(fn))
 
-    # read in txt file
-    # store bytes
-    # remove file 
-    # return bytes as attachment
     try:
         download_bytes = io.BytesIO()
         with open(fp, 'rb') as f:
