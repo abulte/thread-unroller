@@ -1,17 +1,43 @@
 import os
 
+import requests
 import tweepy
 
 
 class Thread():
     def __init__(self, initial):
-        # markdown-it-attrs
+        # markdown-it-attrs for class attributes
         # https://stackoverflow.com/a/39214987
-        self.text = f"{initial} {{.first}}\n\n---\n\n"
+        self.text = f"{self.parse(initial)} {{.first}}\n\n---\n\n"
 
-    def add(self, text):
+    @classmethod
+    def parse(cls, status):
+        full_text = status["full_text"]
+        entities = status["entities"]
+        ex_entities = status.get("extended_entities", {})
+
+        # download and replace images url by markdown
+        for m in [_m for _m in ex_entities.get("media", []) if _m["type"] == "photo"]:
+            r = requests.get(m["media_url_https"])
+            r.raise_for_status()
+            image_path = f"images/{m['id']}.jpg"
+            with open(f"files/{image_path}", "wb") as ofile:
+                ofile.write(r.content)
+            if m["url"] in full_text:
+                full_text = full_text.replace(m["url"], f"![]({image_path})")
+            else:
+                full_text += f" ![]({image_path})"
+
+        # replace urls with originals and markdown
+        for url in entities["urls"]:
+            true_url = url["expanded_url"]
+            full_text = full_text.replace(url["url"], f"[{true_url}]({true_url})")
+
+        return full_text
+
+    def add(self, status):
         # FIXME: handle last tweet
-        self.text += f"{text}\n\n---\n\n"
+        self.text += f"{self.parse(status)}\n\n---\n\n"
 
 
 def return_api():
@@ -38,15 +64,15 @@ def unthread(url):
         print("topLevelTweet", topLevelTweet)
     except:
         raise Exception("Error finding tweet: {}".format(tweet_id))
-    thread = Thread(topLevelTweet["full_text"])
+    thread = Thread(topLevelTweet)
     uid = topLevelTweet["user"]["id"]
 
     def dig(tweet_id):
-        for page in tweepy.Cursor(api.user_timeline, id=uid, since_id = tweet_id, tweet_mode="extended").pages():
+        for page in tweepy.Cursor(api.user_timeline, id=uid, since_id=tweet_id, tweet_mode="extended").pages():
             nextTweet = [item._json for item in page if item._json["in_reply_to_status_id_str"] == tweet_id]
             if nextTweet:
                 print("next", nextTweet)
-                thread.add(nextTweet[0]["full_text"])
+                thread.add(nextTweet[0])
                 dig(nextTweet[0]["id_str"])
 
     dig(tweet_id)

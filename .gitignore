@@ -5,5 +5,6 @@ venv/
 *.yaml
 files/*
 !files/.gitkeep
-images/*
-!images/.gitkeep
+files/images/*
+!files/images
+!files/images/.gitkeep
