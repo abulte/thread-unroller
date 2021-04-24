@@ -8,3 +8,4 @@ files/*
 files/images/*
 !files/images
 !files/images/.gitkeep
+node_modules
