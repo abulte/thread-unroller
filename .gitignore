@@ -1,11 +1,7 @@
-venv/
-.env
 *__pycache__/
-*.log
-*.yaml
-files/*
-!files/.gitkeep
-files/images/*
-!files/images
-!files/images/.gitkeep
 node_modules
+blog/threads/*.md
+!blog/threads/.gitkeep
+blog/threads/images/*.jpg
+!blog/threads/images/.gitkeep
+blog/.vuepress/dist

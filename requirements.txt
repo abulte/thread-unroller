@@ -1,3 +1,5 @@
-Flask
-oauthlib
 tweepy
+minicli
+requests
+jinja2
+pyyaml

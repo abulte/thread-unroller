@@ -1,10 +1,14 @@
 const { description } = require('../../package')
+const glob = require('glob')
+
+const threadsList = glob.sync('blog/threads/*.md').map(f => f.split('/')[2]).filter(f => f !== 'index.md')
+console.log(threadsList)
 
 module.exports = {
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
-  title: 'Vuepress Docs Boilerplate',
+  title: 'My blog, with twitter threads',
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
@@ -34,27 +38,20 @@ module.exports = {
     lastUpdated: false,
     nav: [
       {
-        text: 'Guide',
-        link: '/guide/',
+        text: 'Threads',
+        link: '/threads/',
       },
-      {
-        text: 'Config',
-        link: '/config/'
-      },
-      {
-        text: 'VuePress',
-        link: 'https://v1.vuepress.vuejs.org'
-      }
     ],
     sidebar: {
-      '/guide/': [
+      '/threads/': [
         {
-          title: 'Guide',
+          title: 'Threads',
           collapsable: false,
-          children: [
-            '',
-            'using-vue',
-          ]
+          children: threadsList,
+          // children: [
+          //   '1385195772199714816.md',
+          //   '1381281294865272833.md',
+          // ]
         }
       ],
     }
