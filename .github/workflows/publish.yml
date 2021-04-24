@@ -20,6 +20,7 @@ jobs:
         run: |
           pip install -r requirements.txt
           python unthread.py bulk
+          yarn
           yarn build
 
       - name: Publish generated content to GitHub Pages
