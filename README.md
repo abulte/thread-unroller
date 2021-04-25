@@ -25,11 +25,14 @@ The homepage is customizable here https://github.com/abulte/twitter-threads-blog
 
 The templates used to generate the markdown files are here https://github.com/abulte/twitter-threads-blog/tree/master/templates.
 
-A github action worfkflow is included, if you push to github you should have your site automatically deployed and available through github pages.
+A github action workflow is included, if you push to github you should have your site automatically deployed and available through github pages. There is a few things you new to setup first:
+- Apply for a twitter dev account: https://developer.twitter.com/en
+- Create a twitter app and get API key and secret
+- Fill those in your github repo as secrets called `TWITTER_KEY` and `TWITTER_SECRET` in an environment called `prod`
 
 ## Development
 
-Python side, handle thread parsing and conversion to markdown.
+Python side, handle thread parsing and conversion to markdown. Needs `TWITTER_KEY` and `TWITTER_SECRET` env vars set (see above).
 
 ```shell
 pip install -r requirements.txt
