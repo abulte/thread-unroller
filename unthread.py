@@ -73,11 +73,6 @@ def return_api():
 def process(url, title=None):
     """Unthread an URL (top tweet URL)
     :url: Top tweet URL to unthread
-
-    # TODO:
-    # - use metadata parser for external urls (card/embed)
-    # - handle tweet links (use urls[].expanded_url.startswith('twitter.com') and use embed)
-    # - handle mentions and hashtags
     """
     print(f"Handling {url}...")
     tweet_id = url.split("?")[0].split("/")[-1]

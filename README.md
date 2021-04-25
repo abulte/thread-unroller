@@ -50,3 +50,10 @@ yarn dev
 ```
 
 👉 http://localhost:8080/twitter-threads-blog/threads/
+
+## TODO
+
+- commit generated markdown for safe keeping and cache handling (beware of conflicts mayhem when running the job on github actions)
+- use metadata parser for external urls (card/embed)
+- handle tweet links (use urls[].expanded_url.startswith('twitter.com') and use embed)
+- handle mentions and hashtags
