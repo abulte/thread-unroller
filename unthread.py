@@ -12,16 +12,23 @@ from jinja2 import Environment, FileSystemLoader
 env = Environment(
     loader=FileSystemLoader("templates"),
 )
-template = env.get_template('thread.md')
+thread_template = env.get_template('thread.md')
+index_template = env.get_template('threads.md')
 
 
 class Thread():
 
-    def __init__(self, initial):
+    def __init__(self, initial, title=None):
         self.tweets = []
         text, min_indice = self.parse(initial)
         # separate content from the other stuff to allow text as fallback title
-        self.tweets.append(f"{text[:min_indice]}\n{text[min_indice:]}")
+        content = text[:min_indice]
+        if not title:
+            self.title = content
+            self.tweets.append(f"\n{text[min_indice:]}")
+        else:
+            self.title = title
+            self.tweets.append(f"{content}\n{text[min_indice:]}")
 
     def add(self, status):
         text, _ = self.parse(status)
@@ -80,7 +87,7 @@ def process(url, title=None):
         topLevelTweet = api.get_status(tweet_id, tweet_mode="extended")._json
     except:
         raise Exception(f"Error finding tweet: {tweet_id}")
-    thread = Thread(topLevelTweet)
+    thread = Thread(topLevelTweet, title=title)
     uid = topLevelTweet["user"]["id"]
 
     def dig(tweet_id):
@@ -92,17 +99,24 @@ def process(url, title=None):
 
     dig(tweet_id)
     with open(output_file, "w+") as f:
-        f.write(template.render(title=title, thread=thread))
+        f.write(thread_template.render(thread=thread))
+
+    return thread
 
 
 @cli
 def bulk():
+    """Parse `threads.yml` and build threads and index page."""
+    threads = []
     with open("threads.yml") as ifile:
         config = safe_load(ifile)
-        author = config["author"]
-        for thread in config["threads"]:
-            url = f"https://twitter.com/{author}/status/{thread['id']}"
-            process(url, title=thread.get("title"))
+    author = config["author"]
+    for thread in config["threads"]:
+        url = f"https://twitter.com/{author}/status/{thread['id']}"
+        res = process(url, title=thread.get("title"))
+        threads.append((thread["id"], res))
+    with open(f"{DEST_PATH}/index.md", "w") as f:
+        f.write(index_template.render(author=author, threads=threads))
 
 
 if __name__ == "__main__":

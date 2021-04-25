@@ -2,7 +2,7 @@
 home: true
 heroImage: https://v1.vuepress.vuejs.org/hero.png
 tagline:
-actionText: Quick Start →
+actionText: See the threads →
 actionLink: /threads/
 features:
 - title: Feature 1 Title
