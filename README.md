@@ -2,7 +2,11 @@
 
 Generate a blog from your twitter threads.
 
-Configuration is done in `threads.yml`. List the threads (top level tweet id) you want in your blog, an optionnal title, and fill in your twitter handle.
+## Usage
+
+Start by cloning the repository.
+
+Configuration is done in `threads.yml`. List the threads (top level tweet id, you can find it in the URL) you want in your blog, an optionnal title, and fill in your twitter handle.
 
 ```yml
 author: abulte
@@ -14,6 +18,12 @@ threads:
     id: 1381281294865272833
     title:
 ```
+
+You can change the title of the blog here https://github.com/abulte/twitter-threads-blog/blob/ebe28662f8c06f77b93d4ab12d7677c083fd265c/blog/.vuepress/config.js#L18.
+
+The homepage is customizable here https://github.com/abulte/twitter-threads-blog/blob/master/blog/index.md.
+
+The templates used to generate the markdown files are here https://github.com/abulte/twitter-threads-blog/tree/master/templates.
 
 ## Development
 
