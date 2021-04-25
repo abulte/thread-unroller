@@ -1,10 +1,17 @@
 const { description } = require('../../package')
 const glob = require('glob')
 
-const threadsList = glob.sync('blog/threads/*.md').map(f => f.split('/')[2]).filter(f => f !== 'index.md')
-console.log(threadsList)
+const threadsList = glob
+  .sync('blog/threads/*.md')
+  .map(f => f.split('/')[2])
+  .filter(f => f !== 'index.md')
 
 module.exports = {
+  /**
+   * Compatibility with github pages
+   */
+  base: '/twitter-threads-blog/',
+
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
