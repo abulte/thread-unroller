@@ -25,6 +25,8 @@ The homepage is customizable here https://github.com/abulte/twitter-threads-blog
 
 The templates used to generate the markdown files are here https://github.com/abulte/twitter-threads-blog/tree/master/templates.
 
+A github action worfkflow is included, if you push to github you should have your site automatically deployed and available through github pages.
+
 ## Development
 
 Python side, handle thread parsing and conversion to markdown.
