@@ -5,7 +5,7 @@ title: "{{ thread.title }}"
 
 {%- if loop.index == 1 -%}
 # {{ thread.title }}
-{%- endif -%}
+{%- endif %}
 
 {{ tweet }}
 
